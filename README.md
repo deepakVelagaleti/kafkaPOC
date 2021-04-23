@@ -2,9 +2,9 @@
 
 ## Setup
 ### Download below files
-Download and install or some software to extract tar.gz files - http://www.7-zip.org/download.html
-Download ZooKeeper version (3.7.0) http://zookeeper.apache.org/releases.html
-Download Kafka version (2.12-2.7.0) http://kafka.apache.org/downloads.html
+1. Download and install or some software to extract tar.gz files - http://www.7-zip.org/download.html
+2. Download ZooKeeper version (3.7.0) http://zookeeper.apache.org/releases.html
+3. Download Kafka version (2.12-2.7.0) http://kafka.apache.org/downloads.html
 
 #### ZooKeeper
 1. Extract downloaded zookeeper to C:/, like C:\apache-zookeeper-3.7.0
@@ -26,10 +26,10 @@ Download Kafka version (2.12-2.7.0) http://kafka.apache.org/downloads.html
 
 
 ##### To experiment on laptop
-1. To run ZooKeeper server, run below commnad
+1. To run ZooKeeper server if not already started, run below command
     zkserver
 
-2. To run Kafka server, run below commnad
+2. To run Kafka server if not already started, run below command
     kafka-server-start.bat %KAFKA_HOME%\config\server.properties
 
 3. Create a Kafka Topic, run below command
