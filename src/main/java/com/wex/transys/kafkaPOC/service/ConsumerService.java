@@ -13,9 +13,16 @@ public class ConsumerService
     SimpMessagingTemplate template;
 
     @KafkaListener(topics = "test", groupId = "group_id", containerFactory = "kafkaListenerContainerFactory")
-    public void consume1(User user)
+    public void consume(User user)
     {
         template.convertAndSend("/topic/user", user);
-        System.out.println(String.format("$$$$ => Consumed message: %s", user));
+        System.out.println(String.format("$$$$ => Consumer1 message: %s", user));
+    }
+
+    @KafkaListener(topics = "test", groupId = "group_id2", containerFactory = "kafkaListenerContainerFactory")
+    public void consume2(User user)
+    {
+        template.convertAndSend("/topic/user", user);
+        System.out.println(String.format("$$$$ => Consumer2 message: %s", user));
     }
 }

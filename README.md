@@ -51,6 +51,11 @@
     * To list all the topics, kafka-topics.bat --list --zookeeper localhost:2181 
     * To describe the topic, kafka-topics.bat --describe --zookeeper localhost:2181 --topic [TOPIC NAME]
     * To delete a topic, kafka-run-class.bat kafka.admin.TopicCommand --delete --topic [TOPIC NAME] --zookeeper localhost:2181
+        * Noticed the kafka server crashes after deleting a topic. Haven't found the reason yet, but looks like this issue is predominant in Windows. 
+        * Delete the topic first by running above command and Open cmd and Run zkCli.cmd
+        * Do ls /brokers/topics to confirm the topic you want to delete is in the output
+        * Run deleteAll /brokers/topics/[TOPIC NAME] to delete the topic completely. 
+        Deleteall only deletes the topic referenced, it does not delete all the topics.
     
 
 
