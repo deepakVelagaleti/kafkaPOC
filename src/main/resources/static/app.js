@@ -4,22 +4,40 @@ function setConnected(connected) {
     $("#connect").prop("disabled", connected);
     $("#disconnect").prop("disabled", !connected);
     if (connected) {
-        $("#conversation").show();
+        $("#conversationA0").show();
+        $("#conversationA1").show();
+        $("#conversationB0").show();
+        $("#conversationB1").show();
     }
     else {
-        $("#conversation").hide();
+        $("#conversationA0").hide();
+        $("#conversationA1").hide();
+        $("#conversationB0").hide();
+        $("#conversationB1").hide();
     }
-    $("#userinfo").html("");
+    $("#userinfoA0").html("");
+    $("#userinfoA1").html("");
+    $("#userinfoB0").html("");
+    $("#userinfoB1").html("");
 }
 
 function connect() {
-    var socket = new SockJS('/websocket-example');
+    var socket = new SockJS('/websocket');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/user', function (greeting) {
-            showGreeting(JSON.parse(greeting.body).name);
+        stompClient.subscribe('/stream/consumerA0', function (message) {
+            showA0(JSON.parse(message.body).name);
+        });
+        stompClient.subscribe('/stream/consumerA1', function (message) {
+            showA1(JSON.parse(message.body).name);
+        });
+        stompClient.subscribe('/stream/consumerB0', function (message) {
+            showB0(JSON.parse(message.body).name);
+        });
+        stompClient.subscribe('/stream/consumerB1', function (message) {
+            showB1(JSON.parse(message.body).name);
         });
     });
 }
@@ -32,12 +50,24 @@ function disconnect() {
     console.log("Disconnected");
 }
 
-function sendName() {
-    stompClient.send("/topic/user", {}, JSON.stringify({'name': $("#name").val()}));
+function sendMessage() {
+    stompClient.send("/app/toKafka", {}, JSON.stringify({'name': $("#name").val()}));
 }
 
-function showGreeting(message) {
-    $("#userinfo").append("<tr><td>" + message + "</td></tr>");
+function showA0(message) {
+    $("#userinfoA0").append("<tr><td>" + message + "</td></tr>");
+}
+
+function showA1(message) {
+    $("#userinfoA1").append("<tr><td>" + message + "</td></tr>");
+}
+
+function showB0(message) {
+    $("#userinfoB0").append("<tr><td>" + message + "</td></tr>");
+}
+
+function showB1(message) {
+    $("#userinfoB1").append("<tr><td>" + message + "</td></tr>");
 }
 
 $(function () {
@@ -46,5 +76,5 @@ $(function () {
     });
     $( "#connect" ).click(function() { connect(); });
     $( "#disconnect" ).click(function() { disconnect(); });
-    $( "#send" ).click(function() { sendName(); });
+    $( "#sendMessage" ).click(function() { sendMessage(); });
 });

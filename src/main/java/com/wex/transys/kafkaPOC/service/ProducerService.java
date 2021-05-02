@@ -10,19 +10,20 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 @Service
 public class ProducerService
 {
-    private final KafkaTemplate<String, User> kafkaTemplate;
+    private final KafkaTemplate<Integer, User> kafkaTemplate;
     private final String TOPIC = "test";
 
-    public ProducerService(KafkaTemplate<String, User> kafkaTemplate)
+    public ProducerService(KafkaTemplate<Integer, User> kafkaTemplate)
     {
         this.kafkaTemplate = kafkaTemplate;
     }
 
     public void sendMessage(User message)
     {
-        System.out.println(String.format("$$$$ => Producing message: %s", message));
+        System.out.println(String.format("$$$$ => Producer: %s", message));
 
-        ListenableFuture<SendResult<String, User>> future = this.kafkaTemplate.send(TOPIC, message);
+        final int PARTITION_KEY = message.getName().charAt(0) % 2;
+        ListenableFuture<SendResult<Integer, User>> future = this.kafkaTemplate.send(TOPIC, PARTITION_KEY, PARTITION_KEY, message);
         future.addCallback(new ListenableFutureCallback<>()
         {
             @Override
@@ -32,7 +33,7 @@ public class ProducerService
             }
 
             @Override
-            public void onSuccess(SendResult<String, User> result)
+            public void onSuccess(SendResult<Integer, User> result)
             {
 //                System.out.println(String.format("Sent message=[ {%s} ] with offset=[ {%s} ]", message, result.getRecordMetadata().offset()));
             }

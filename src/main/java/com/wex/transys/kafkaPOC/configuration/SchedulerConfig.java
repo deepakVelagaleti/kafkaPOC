@@ -20,17 +20,23 @@ public class SchedulerConfig
     @Autowired
     ProducerService producerService;
 
+    private static final String EVEN_NUMBERS = "02468";
+    private static final String ODD_NUMBERS = "13579";
+
+    private boolean prevKeyWasEven = false;
+
     @Scheduled(fixedDelay = 3000)
     public void sendAdhocMessages()
     {
-        template.convertAndSend("/topic/user", new User("Fixed Delay Scheduler"));
-        producerService.sendMessage(new User(getRandomString()));
+        User message = new User(getRandomString());
+        producerService.sendMessage(message);
     }
 
     private String getRandomString()
     {
-        String CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
-        StringBuilder randomStr = new StringBuilder();
+        String CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890~!@#$%^&*(){}[]+-:;<>,.?";
+        char firstChar = prevKeyWasEven ? getFirstChar(ODD_NUMBERS) : getFirstChar(EVEN_NUMBERS);
+        StringBuilder randomStr = new StringBuilder(firstChar+"");
         Random rnd = new Random();
         while (randomStr.length() < 6)   // length of the random string.
         {
@@ -38,5 +44,16 @@ public class SchedulerConfig
             randomStr.append(CHARS.charAt(index));
         }
         return randomStr.toString();
+    }
+
+
+    private char getFirstChar(String NUMBERS)
+    {
+        Random rnd = new Random();
+        int index = (int) (rnd.nextFloat() * NUMBERS.length());
+
+        prevKeyWasEven = !prevKeyWasEven;
+
+        return NUMBERS.charAt(index);
     }
 }

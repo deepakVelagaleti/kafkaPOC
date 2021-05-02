@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Hello WebSocket</title>
+    <title>Kafka POC</title>
     <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="/main.css" rel="stylesheet">
     <script src="/webjars/jquery/jquery.min.js"></script>
@@ -10,9 +10,12 @@
     <script src="/app.js"></script>
 </head>
 <body>
-<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
-    enabled. Please enable
-    Javascript and reload this page!</h2></noscript>
+<noscript>
+    <h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
+        enabled. Please enable Javascript and reload this page!</h2>
+</noscript>
+<h1 style="text-align: center">KAFKA</h1>
+<br>
 <div id="main-content" class="container">
     <div class="row">
         <div class="col-md-6">
@@ -28,22 +31,57 @@
         <div class="col-md-6">
             <form class="form-inline">
                 <div class="form-group">
-                    <label for="name">What is your name?</label>
-                    <input type="text" id="name" class="form-control" placeholder="Your name here...">
+                    <label for="name">Publish to Kafka: </label>
+                    <input type="text" id="name" class="form-control" placeholder="Your message here...">
                 </div>
-                <button id="send" class="btn btn-default" type="submit">Send</button>
+                <button id="sendMessage" class="btn btn-default" type="submit">Send</button>
             </form>
         </div>
     </div>
+    <br>
     <div class="row">
-        <div class="col-md-12">
-            <table id="conversation" class="table table-striped">
-                <thead>
-                <tr>
-                    <th>StockInfo</th>
-                </tr>
-                </thead>
-                <tbody id="userinfo">
+        <div class="col-md-6">
+            <h4>Consumer Group A</h4>
+            <label>Consumer A0</label>
+        </div>
+        <div class="col-md-6">
+            <h4>Consumer Group B</h4>
+            <label>Consumer B0</label>
+        </div>
+    </div>
+    <div class="row" style="height: 230px; overflow-y:auto">
+        <div class="col-md-6">
+            <table id="conversationA0" class="table table-striped">
+                <tbody id="userinfoA0">
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <table id="conversationB0" class="table table-striped">
+                <tbody id="userinfoB0">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <label>Consumer A1</label>
+        </div>
+        <div class="col-md-6">
+            <label>Consumer B1</label>
+        </div>
+    </div>
+    <br>
+    <div class="row" style="height: 230px; overflow-y:auto">
+        <div class="col-md-6">
+            <table id="conversationA1" class="table table-striped">
+                <tbody id="userinfoA1">
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <table id="conversationB1" class="table table-striped">
+                <tbody id="userinfoB1">
                 </tbody>
             </table>
         </div>
