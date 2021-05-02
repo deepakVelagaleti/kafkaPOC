@@ -18,7 +18,7 @@ public class ConsumerService
     public void consumeA0(User message)
     {
         template.convertAndSend("/stream/consumerA0", message);
-        System.out.println(String.format("$$$$ => Consumer-A0: %s", message));
+        System.out.printf("$$$$ => Consumer-A0: %s%n", message);
     }
 
     @KafkaListener(topicPartitions = { @TopicPartition(topic = "test", partitions = {"1"})}, groupId = "group_idA",
@@ -26,7 +26,7 @@ public class ConsumerService
     public void consumeA1(User message)
     {
         template.convertAndSend("/stream/consumerA1", message);
-        System.out.println(String.format("$$$$ => Consumer-A1: %s", message));
+        System.out.printf("$$$$ => Consumer-A1: %s%n", message);
     }
 
     @KafkaListener(topicPartitions = { @TopicPartition(topic = "test", partitions = {"0"})}, groupId = "group_idB",
@@ -34,7 +34,7 @@ public class ConsumerService
     public void consumeB0(User message)
     {
         template.convertAndSend("/stream/consumerB0", message);
-        System.out.println(String.format("$$$$ => Consumer-B0: %s", message));
+        System.out.printf("$$$$ => Consumer-B0: %s%n", message);
     }
 
     @KafkaListener(topicPartitions = { @TopicPartition(topic = "test", partitions = {"1"})}, groupId = "group_idB",
@@ -42,6 +42,6 @@ public class ConsumerService
     public void consumeB1(User message)
     {
         template.convertAndSend("/stream/consumerB1", message);
-        System.out.println(String.format("$$$$ => Consumer-B1: %s", message));
+        System.out.printf("$$$$ => Consumer-B1: %s%n", message);
     }
 }
