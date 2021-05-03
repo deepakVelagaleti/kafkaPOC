@@ -4,12 +4,14 @@ function setConnected(connected) {
     $("#connect").prop("disabled", connected);
     $("#disconnect").prop("disabled", !connected);
     if (connected) {
+        $("#counts").show();
         $("#conversationA0").show();
         $("#conversationA1").show();
         $("#conversationB0").show();
         $("#conversationB1").show();
     }
     else {
+        $("#counts").hide();
         $("#conversationA0").hide();
         $("#conversationA1").hide();
         $("#conversationB0").hide();
@@ -27,6 +29,21 @@ function connect() {
     stompClient.connect({}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
+        stompClient.subscribe('/stream/producerCount', function (message) {
+            showProducerCount(JSON.parse(message.body).count);
+        });
+        stompClient.subscribe('/stream/consumerA0Count', function (message) {
+            showConsumerA0Count(JSON.parse(message.body).count);
+        });
+        stompClient.subscribe('/stream/consumerA1Count', function (message) {
+            showConsumerA1Count(JSON.parse(message.body).count);
+        });
+        stompClient.subscribe('/stream/consumerB0Count', function (message) {
+            showConsumerB0Count(JSON.parse(message.body).count);
+        });
+        stompClient.subscribe('/stream/consumerB1Count', function (message) {
+            showConsumerB1Count(JSON.parse(message.body).count);
+        });
         stompClient.subscribe('/stream/consumerA0', function (message) {
             showA0(JSON.parse(message.body).name);
         });
@@ -52,6 +69,26 @@ function disconnect() {
 
 function sendMessage() {
     stompClient.send("/app/toKafka", {}, JSON.stringify({'name': $("#name").val()}));
+}
+
+function showProducerCount(message) {
+    $("#producerCount").text(message);
+}
+
+function showConsumerA0Count(message) {
+    $("#consumerA0Count").text(message);
+}
+
+function showConsumerA1Count(message) {
+    $("#consumerA1Count").text(message);
+}
+
+function showConsumerB0Count(message) {
+    $("#consumerB0Count").text(message);
+}
+
+function showConsumerB1Count(message) {
+    $("#consumerB1Count").text(message);
 }
 
 function showA0(message) {

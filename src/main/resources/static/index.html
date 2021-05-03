@@ -17,6 +17,40 @@
 <h1 style="text-align: center">KAFKA</h1>
 <br>
 <div id="main-content" class="container">
+    <div class="row" id="counts">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <table style="text-align: center">
+                <tr>
+                    <td colspan="3">Producer:</td>
+                    <td>&emsp;</td>
+                    <td>&emsp;</td>
+                    <td colspan="3" id="producerCount"></td>
+                </tr>
+                <tr>
+                    <td>Consumer-A0:</td>
+                    <td>&emsp;</td>
+                    <td id="consumerA0Count"></td>
+                    <td>&emsp;</td>
+                    <td>&emsp;</td>
+                    <td>Consumer-A1:</td>
+                    <td>&emsp;</td>
+                    <td id="consumerA1Count"></td>
+                </tr>
+                <tr>
+                    <td>Consumer-B0:</td>
+                    <td>&emsp;</td>
+                    <td id="consumerB0Count">&emsp;</td>
+                    <td>&emsp;</td>
+                    <td>&emsp;</td>
+                    <td>Consumer-B1:</td>
+                    <td>&emsp;</td>
+                    <td id="consumerB1Count"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
     <div class="row">
         <div class="col-md-6">
             <form class="form-inline">
@@ -49,7 +83,7 @@
             <label>Consumer B0</label>
         </div>
     </div>
-    <div class="row" style="height: 230px; overflow-y:auto">
+    <div class="row" style="height: 190px; overflow-y:auto">
         <div class="col-md-6">
             <table id="conversationA0" class="table table-striped">
                 <tbody id="userinfoA0">
@@ -72,7 +106,7 @@
         </div>
     </div>
     <br>
-    <div class="row" style="height: 230px; overflow-y:auto">
+    <div class="row" style="height: 190px; overflow-y:auto">
         <div class="col-md-6">
             <table id="conversationA1" class="table table-striped">
                 <tbody id="userinfoA1">
